@@ -10,10 +10,13 @@ namespace SevenMagpies.AppGeneral
     {
         public bool FirstLaunchCompleted;
         public List<string> CompletedTutorials;
+        public long RegistrationTime;
 
         public PlayerSaveState() 
         {
             CompletedTutorials = new List<string>();
+
+            RegistrationTime = DateTime.UtcNow.Ticks;
         }
     }
 }

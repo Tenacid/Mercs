@@ -10,6 +10,8 @@ namespace SevenMagpies.AppGeneral
 
         public readonly JsonSerializerSettings SerializationSetting = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Full, Formatting = Formatting.Indented };
 
+        private string _savePath = Path.Combine( Application.persistentDataPath, PlayerSaveStateFileName );
+
         private PlayerSaveState _state;
 
         public PlayerSaveStateProvider()
@@ -24,20 +26,36 @@ namespace SevenMagpies.AppGeneral
             }
 
             _state = new PlayerSaveState();
+            SaveState();
         }
 
         public bool TryLoadStateFromStorage()
-        {
-            var path = Path.Combine( Application.persistentDataPath, PlayerSaveStateFileName );
+        {            
 
-            if ( !File.Exists( path ) )
+            if ( !File.Exists( _savePath ) )
             {
                 return false;
             }
 
-            _state = ( PlayerSaveState ) JsonConvert.DeserializeObject( File.ReadAllText( path ), SerializationSetting );
+            _state = ( PlayerSaveState ) JsonConvert.DeserializeObject( File.ReadAllText( _savePath ), SerializationSetting );
 
             return true;
+        }
+
+        public void SaveState() 
+        {
+            var text = JsonConvert.SerializeObject( _state, SerializationSetting );
+            File.WriteAllText( _savePath, text );            
+        }
+
+        public void DeleteState() 
+        {
+            if ( !File.Exists( _savePath ) )
+            {
+                return;
+            }
+
+            File.Delete( _savePath );
         }
 
         public bool FirstLaunchCompleted => _state.FirstLaunchCompleted;
