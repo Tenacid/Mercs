@@ -10,8 +10,6 @@ namespace SevenMagpies.AppGeneral
     {
         public void Construct();
 
-        public bool Contains( string resourceName );
-
         public Task<T> GetResourceAsync<T>( string resourceName );
     }
 }

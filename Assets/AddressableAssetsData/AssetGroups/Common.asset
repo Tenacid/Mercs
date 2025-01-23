@@ -17,8 +17,23 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 0ccdbade719ce1d4dac51579810dcafa
   m_SerializeEntries:
+  - m_GUID: 23efbd0ffe9d4c94aa5e39936fef77e1
+    m_Address: CheatsPanelWidget
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61925cb8485cc614d8db57a49c26f1df
+    m_Address: ButtonWidget
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 748e4ff5a8a34f24f81660edd65381ec
     m_Address: ApplicationContext
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c656e05321a299a4f90949af571fd602
+    m_Address: PoolService
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

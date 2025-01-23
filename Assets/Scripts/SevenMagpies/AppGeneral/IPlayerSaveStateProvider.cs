@@ -6,5 +6,7 @@ namespace SevenMagpies.AppGeneral
         public bool FirstLaunchCompleted { get; }
 
         public void PrepareState();
+
+        public void DeleteState();
     }
 }

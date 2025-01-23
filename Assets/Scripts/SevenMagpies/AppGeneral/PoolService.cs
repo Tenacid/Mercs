@@ -55,15 +55,11 @@ namespace SevenMagpies.AppGeneral
 
             if ( !resourceExists )
             {
+                var origin = await _resourcesService.GetResourceAsync<T>( resourceName );
 
-                if ( _resourcesService.Contains( resourceName ) )
-                {
-                    var origin = await _resourcesService.GetResourceAsync<T>( resourceName );
-
-                    resource = Instantiate( origin, transform );
-                    resource.ResourceName = resourceName;
-                    resourceExists = true;
-                }
+                resource = Instantiate( origin, transform );
+                resource.ResourceName = resourceName;
+                resourceExists = true;
             }
 
             if ( !resourceExists )
