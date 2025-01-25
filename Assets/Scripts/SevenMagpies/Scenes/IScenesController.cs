@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SevenMagpies.AppGeneral
+namespace SevenMagpies.Scenes
 {
     public interface IScenesController
     {

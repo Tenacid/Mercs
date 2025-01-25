@@ -59,5 +59,11 @@ namespace SevenMagpies.AppGeneral
         }
 
         public bool FirstLaunchCompleted => _state.FirstLaunchCompleted;
+
+        public void SetFirstLaunchCompleted() 
+        {
+            _state.FirstLaunchCompleted = true;
+            SaveState();
+        }
     }
 }

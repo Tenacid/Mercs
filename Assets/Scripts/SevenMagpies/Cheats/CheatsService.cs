@@ -23,6 +23,8 @@ namespace SevenMagpies.Cheats
         {
             _cheatsButton.onClick.RemoveAllListeners();
             _cheatsButton.onClick.AddListener(OpenCheatsPanel);
+
+            DontDestroyOnLoad( gameObject );
         }
 
         private async void OpenCheatsPanel() 

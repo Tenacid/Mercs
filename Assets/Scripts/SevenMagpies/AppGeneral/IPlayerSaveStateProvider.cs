@@ -8,5 +8,7 @@ namespace SevenMagpies.AppGeneral
         public void PrepareState();
 
         public void DeleteState();
+
+        public void SetFirstLaunchCompleted();
     }
 }
