@@ -1,6 +1,6 @@
 ﻿namespace SevenMagpies.Scenes
 {
-    public class MetaSceneStarter : SceneStarter
+    public class MetaSceneStarter : SceneContext
     {
     }
 }

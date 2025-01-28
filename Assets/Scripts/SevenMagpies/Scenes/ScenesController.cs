@@ -19,6 +19,8 @@ namespace SevenMagpies.Scenes
 
         private float _scenePreparationProgress;
 
+        public event Action BeforeChangeScene;
+
         public void Construct( IProcessObserver loadingObserver )
         {
             _loadingObserver = loadingObserver;
@@ -26,7 +28,7 @@ namespace SevenMagpies.Scenes
 
         public void LoadMatchScene( Action onComplete = null )
         {
-            LoadSceneInner( MatchSceneName, onComplete, new MatchSceneStarter() );
+            LoadSceneInner( MatchSceneName, onComplete, new MatchSceneContext() );
         }
 
         public void LoadMetaScene( Action onComplete = null )
@@ -34,9 +36,11 @@ namespace SevenMagpies.Scenes
             LoadSceneInner( MetaSceneName, onComplete, new MetaSceneStarter() );
         }
 
-        private async void LoadSceneInner( string sceneName, Action onComplete, SceneStarter sceneStarter )
+        private async void LoadSceneInner( string sceneName, Action onComplete, SceneContext sceneStarter )
         {
             _loadingObserver.ChangeProgress( 0 );
+
+            BeforeChangeScene?.Invoke();            
 
             var loadingSceneHandler = Addressables.LoadSceneAsync( LoadingSceneName, LoadSceneMode.Single );
             while ( !loadingSceneHandler.IsDone )
@@ -52,7 +56,7 @@ namespace SevenMagpies.Scenes
                 await Task.Yield();
             }
 
-            await sceneStarter.PrepareScene( UpdateSceneStartProgress );
+            await sceneStarter.Init( UpdateSceneStartProgress );
 
             _loadingObserver.ChangeProgress( 1f );
 

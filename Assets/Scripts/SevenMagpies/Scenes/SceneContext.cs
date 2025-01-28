@@ -1,15 +1,17 @@
-﻿using System;
+﻿using SevenMagpies.AppGeneral;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SevenMagpies.Scenes
 {
-    public abstract class SceneStarter
+    public abstract class SceneContext: IExclusiveContext
     {
+        protected bool _inited;
         protected bool _sceneMarkupFounded;
         protected SceneMarkup _sceneMarkup;
 
-        public virtual async Task PrepareScene( Action<float> updateProgressCallback )
+        protected async Task PrepareMarkup( float progressWeight, Action<float> updateProgressCallback ) 
         {
             _sceneMarkupFounded = false;
             _sceneMarkup = null;
@@ -28,11 +30,23 @@ namespace SevenMagpies.Scenes
                 }
             }
 
-            updateProgressCallback?.Invoke( 0.5f );
+            updateProgressCallback?.Invoke( progressWeight/2f );
 
             await _sceneMarkup.Prewarm();
 
-            updateProgressCallback?.Invoke( 1f );
+            updateProgressCallback?.Invoke( progressWeight );
+        }
+
+        public virtual async Task Init( Action<float> updateProgressCallback )
+        {
+            if ( _inited )
+            {
+                throw new Exception( $"{this.GetType().Name} already inited" );
+            }
+
+            _inited = true;
+
+            DIContainer.Bind<IExclusiveContext>( this, this );
         }
     }
 }

@@ -113,5 +113,27 @@ namespace SevenMagpies.AppGeneral
             return ( T ) _bindingsTags[ type ][ tag ];
         }
 
+
+        public static void TryUninitExclusiveContext() 
+        {
+            var type = typeof( IExclusiveContext );
+
+            if ( !_bindings.ContainsKey( type ) )
+            {
+                return;
+            }
+
+            var context = Get<IExclusiveContext>();
+
+            var disposableList = GetAll<IDisposable>( context );
+            foreach ( var disposable in disposableList )
+            {
+                disposable.Dispose();
+            }
+
+            CleartByContext( context );
+
+            ClearCache();
+        }
     }
 }
