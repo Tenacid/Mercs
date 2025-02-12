@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Bootstrap.unity
+    path: Assets/MercsAssets/Scenes/Bootstrap.unity
     guid: b7a132c05b7cc764099a24a13835229b
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2d7a25f7645ee6044b722c7fef3bf9be, type: 2}
