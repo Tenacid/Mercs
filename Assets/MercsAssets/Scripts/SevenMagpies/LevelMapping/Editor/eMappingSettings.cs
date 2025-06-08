@@ -51,26 +51,19 @@ public class eMappingSettings : Editor
             LastPath = Application.dataPath;
         }
 
-        var filePath = EditorUtility.OpenFilePanel( "Select png file with level", LastPath, "png" );
-
-        if ( string.IsNullOrEmpty( filePath ) )
-        {
-            return;
-        }
-
-        LastPath = System.IO.Path.GetFullPath( filePath );
-
-        var data = MappingImporter.ImportLevel( filePath, ( MappingSettings ) target );
+        var surfaceData = ReadData( "Select png file with surface", LastPath );
+        var backgroundData = ReadData( "Select png file with background", LastPath );        
+        var entitiesData = ReadData( "Select png file with entities", LastPath );
 
         var levelData = ScriptableObject.CreateInstance<LevelData>();
-        levelData.FillData( data );
+        levelData.FillData( surfaceData, backgroundData, entitiesData );
 
         if ( string.IsNullOrEmpty( LevelDataPath ) )
         {
             LevelDataPath = Application.dataPath;
         }
 
-        var savePath = EditorUtility.SaveFilePanel( "Save level", LevelDataPath, System.IO.Path.GetFileNameWithoutExtension( filePath ), "asset" );
+        var savePath = EditorUtility.SaveFilePanel( "Save level", LevelDataPath, "Level", "asset" );
         var appPath = Application.dataPath;
 
         if ( string.IsNullOrEmpty( savePath ) )
@@ -81,6 +74,20 @@ public class eMappingSettings : Editor
         LevelDataPath = System.IO.Path.GetFullPath( savePath );
 
         UnityEditor.AssetDatabase.CreateAsset( levelData, savePath.Replace(appPath, "Assets" ) );
+
+    }
+
+    private string[,] ReadData(string title , string directory) 
+    {
+        var filePath = EditorUtility.OpenFilePanel( title, directory, "png" );
+
+        if ( string.IsNullOrEmpty( filePath ) )
+        {
+            throw new System.Exception($"Invalid file path: {filePath}");
+        }
+
+        LastPath = System.IO.Path.GetFullPath( filePath );
+        return MappingImporter.ImportLevel( filePath, ( MappingSettings ) target );
 
     }
 }

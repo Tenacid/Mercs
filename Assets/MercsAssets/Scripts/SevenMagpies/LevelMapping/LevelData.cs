@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SevenMagpies.LevelMapping
 {
@@ -12,24 +13,37 @@ namespace SevenMagpies.LevelMapping
         private int _height;
 
         [SerializeField]
-        private List<string> _data;
+        private List<string> _surface;
 
-        
-        
+        [SerializeField]
+        private List<string> _background;
 
-        public void FillData( string[,] incomingData )
+        [SerializeField]
+        private List<string> _entities;
+
+
+
+        public void FillData( string[,] surface, string[,] background, string[,] entities )
         {
-            _width = incomingData.GetLength( 0 );
-            _height = incomingData.GetLength( 1 );
+            _width = surface.GetLength( 0 );
+            _height = surface.GetLength( 1 );
 
-            _data = new List<string>();
-            for ( var x = 0; x < incomingData.GetLength( 0 ); x++ )
+            FillListFromArray( _surface, surface );
+            FillListFromArray( _background, background );
+            FillListFromArray( _entities, entities );
+        }
+
+        private void FillListFromArray<T>(List<T> list, T[,] array) 
+        {
+            list = new List<T>();
+            for ( var x = 0; x < array.GetLength( 0 ); x++ )
             {
-                for ( var y = 0; y < incomingData.GetLength( 1 ); y++ )
+                for ( var y = 0; y < array.GetLength( 1 ); y++ )
                 {
-                    _data.Add( incomingData[ x, y ] );
+                    list.Add( array[ x, y ] );
                 }
             }
         }
+
     }
 }
